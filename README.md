@@ -7,7 +7,7 @@ en UTRM. Este sitio está orientado a la gestión de donadores y administración
 
  Versión actual
 
-Versión: 1.0  
+Versión: 1.0.0
 Última actualización: 06 de noviembre de 2025  
 Sprint: 3  
 Estado: Estructura funcional completa con módulos de login, dashboard de donadores y panel administrativo.
@@ -49,3 +49,4 @@ recursos utilizados
 para clonar este repositorio utiliza el siguiente enlace 
 
 git clone https://github.com/vaguer2/sitio-web.git
+
