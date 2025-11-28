@@ -1,9 +1,11 @@
 {
 	"folders": [
 		{
+			"name": "Bocaditos",
 			"path": "."
 		},
 		{
+			"name": "Bocaditos app",
 			"path": ".."
 		}
 	],
