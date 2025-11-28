@@ -10,27 +10,21 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="login-layout">
-    <div class="left">
-      <h1 class="brand">Bocaditos</h1>
-      <img src="assets/sandwich2.png" alt="Bocaditos logo" class="logo sandwich2">
-    </div>
-    <div class="right">
-      <div class="form-wrap">
-        <div class="avatar"><img src="assets/gato.png" alt="avatar"></div>
-        <h2>LOGIN</h2>
-        <form id="loginForm">
-          <input class="input" type="email" placeholder="EMAIL ID" required>
-          <input class="input" type="password" placeholder="PASSWORD" required>
-          <label class="remember"><input type="checkbox"> REMEMBER ME</label>
-          <button class="btn" type="submit">LOG IN</button>
-          <a class="forgot" href="#">Reset your password</a>
-             <div class="signup-options">
-              <a class="signup-large" href="signup-students.html">Sign in for students</a>
-              <a class="signup-large" href="signup-donors.html">Sign in for donors</a>
-             </div>
-        </form>
-      </div>
+  <div class="centered-page">
+    <div class="form-wrap">
+      <div class="avatar"><img src="assets/gato.png" alt="avatar"></div>
+      <h2>LOGIN</h2>
+      <form id="loginForm">
+        <input class="input" type="email" placeholder="EMAIL ID" required>
+        <input class="input" type="password" placeholder="PASSWORD" required>
+        <label class="remember"><input type="checkbox"> REMEMBER ME</label>
+        <div class="submit-row"><button class="btn" type="submit">LOG IN</button></div>
+        <a class="forgot" href="#">Reset your password</a>
+        <div class="signup-options" style="margin-top:18px;">
+          <a class="signup-large" href="signup-students.html">Sign in for students</a>
+          <a class="signup-large" href="signup-donors.html">Sign in for donors</a>
+        </div>
+      </form>
     </div>
   </div>
   <script>
@@ -39,7 +33,7 @@
       if (!form) return;
       form.addEventListener('submit', function(e){
         e.preventDefault();
-        // Aquí podrías validar o llamar a la API; por ahora hacemos salto a la página principal
+        // validacion o llamado a la API, por ahora hacemos salto a la página principal
         window.location.href = 'index.html';
       });
       // Agregar handlers para las opciones de signup dentro del formulario

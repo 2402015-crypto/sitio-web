@@ -1,4 +1,4 @@
-// app.js - shared utilities
+// app.js - utilidades compartidas
 function logout() {
 	try {
 		// Clear any app-specific state (if used)
@@ -23,3 +23,4 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	}
 });
+
