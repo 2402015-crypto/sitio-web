@@ -32,7 +32,7 @@
           <div class="signup-subtitle">FOR DONORS</div>
 
           <div class="form-card" style="margin-top:18px;">
-            <form class="form-pills" action="index.html" method="get">
+            <form class="form-pills">
               <input class="pill-input" name="nombre" type="text" placeholder="Nombre" required>
               <input class="pill-input" name="apellido" type="text" placeholder="Apellido" required>
               <input class="pill-input" name="telefono" type="tel" placeholder="Telefono">
@@ -41,6 +41,48 @@
               <input class="pill-input" name="contrasena" type="password" placeholder="Contraseña" required>
               <div class="submit-row"><button class="submit-btn" type="submit">Crear cuenta</button></div>
             </form>
+            <script>
+              (function(){
+                var form = document.querySelector('.form-pills');
+                if (!form) return;
+
+                form.addEventListener('submit', async function(e){
+                e.preventDefault();
+                var formData = new FormData(form);
+                var nombre = formData.get('nombre') || '';
+                var apellido = formData.get('apellido') || '';
+                var telefono = formData.get('telefono') || '';
+                var correo = formData.get('correo') || '';
+                var contrasena = formData.get('contrasena') || '';
+
+                var payload = {
+                  name: (nombre || '').trim(),
+                  apellido: (apellido || '').trim(),
+                  telefono: (telefono || '').trim(),
+                  email: correo,
+                  password: contrasena
+                };
+
+                  try {
+                    var res = await fetch('http://localhost:3000/signup', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(payload)
+                    });
+                    var data = await res.json();
+                    if (!res.ok) {
+                      alert(data.error || 'Error al crear la cuenta');
+                      return;
+                    }
+                    alert('Cuenta creada. Redirigiendo al login...');
+                    window.location.href = 'login.html';
+                  } catch (err) {
+                    console.error('Signup error', err);
+                    alert('Error conectando al servidor');
+                  }
+                });
+              })();
+            </script>
           </div>
         </div>
       </div>

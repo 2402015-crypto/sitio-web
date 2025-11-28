@@ -1,0 +1,13 @@
+{
+  "name": "bocaditos-app",
+  "version": "1.0.0",
+  "description": "Bocaditos - Electron wrapper for the static site",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^26.0.0"
+  }
+}

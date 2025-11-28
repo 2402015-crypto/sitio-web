@@ -7,6 +7,25 @@
   <script src="js/admin.js" defer></script>
 </head>
 <body class="admin-panel">
+  <script>
+    // Require valid session for admin panel
+    (async function(){
+      try {
+        var token = localStorage.getItem('bocaditos_token');
+        var userStr = localStorage.getItem('bocaditos_user');
+        if (!token || !userStr) { window.location.href = 'login.html'; return; }
+        var user = JSON.parse(userStr);
+        var res = await fetch('http://localhost:3000/me', { headers: { 'Authorization': 'Bearer ' + token }});
+        if (!res.ok) { localStorage.removeItem('bocaditos_token'); localStorage.removeItem('bocaditos_user'); window.location.href = 'login.html'; return; }
+        var fresh = await res.json();
+        // opcional: mostrar nombre en header
+        var h = document.querySelector('header h2'); if (h) h.textContent = (fresh.name || fresh.email || 'ADMIN');
+      } catch (err) {
+        console.error('Session check failed', err);
+        localStorage.removeItem('bocaditos_token'); localStorage.removeItem('bocaditos_user'); window.location.href = 'login.html';
+      }
+    })();
+  </script>
   <header>
     <h2>ADMIN</h2>
     <button onclick="logout()">Cerrar Sesión</button>

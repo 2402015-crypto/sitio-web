@@ -13,21 +13,41 @@
     <div class="panel">
       <div class="panel-inner">
         <aside class="usuario">
-          <h2>Nombre de usuario</h2>
-          <img src="assets/piña.png" alt="Avatar" class="avatar" />
-          <div style="text-align:center">
-            <span class="estado activo">Activo</span>
-            <span class="estado baja">Baja</span>
+          <img src="assets/piña.png" alt="Avatar" class="avatar-inline" id="avatarImg" />
+          <h2 id="displayName">Usuario</h2>
+          <div style="text-align:center; margin-bottom:8px;">
+            <span class="estado activo" id="statusLabel">Activo</span>
           </div>
-          <div class="profile-box">
-            <p><strong>Rol de usuario:</strong> Beneficiario</p>
-            <p><strong>Carrera:</strong> Lic. en patitos</p>
-            <hr />
-            <p><strong>Matrícula:</strong> 1234 56789</p>
-            <p><strong>Grupo:</strong> Plaza Sésamo</p>
-            <p><strong>Cuatrimestre:</strong> XOXOXOXOXO</p>
+          <div class="profile-box" id="profileBox">
+            <p><strong>Rol:</strong> <span id="profileRole">-</span></p>
+            <p><strong>Correo:</strong> <span id="profileEmail">-</span></p>
+            <p><strong>Nombre:</strong> <span id="profileName">-</span></p>
+            <p><strong>Apellido:</strong> <span id="profileApellido">-</span></p>
+            <p><strong>Teléfono:</strong> <span id="profileTelefono">-</span></p>
+            <p><strong>Curso / Carrera:</strong> <span id="profileCarrera">-</span></p>
+            <p><strong>Grupo:</strong> <span id="profileGrupo">-</span></p>
+            <p><strong>Matrícula:</strong> <span id="profileMatricula">-</span></p>
+            <p><strong>Cuatrimestre:</strong> <span id="profileCuatrimestre">-</span></p>
+            <div style="margin-top:10px; display:flex; gap:8px; justify-content:center;">
+              <button id="editProfileBtn" class="btn">Editar perfil / Completa tus datos</button>
+              <a class="btn" id="logoutBtn" href="login.html">Cerrar sesión</a>
+            </div>
+            <form id="editProfileForm" style="display:none; margin-top:12px; text-align:left;">
+              <label>Nombre<br/><input id="fieldName" class="input" type="text" /></label>
+              <label>Apellido<br/><input id="fieldApellido" class="input" type="text" /></label>
+              <label>Teléfono<br/><input id="fieldTelefono" class="input" type="tel" /></label>
+              <label>Curso / Carrera<br/><input id="fieldCarrera" class="input" type="text" /></label>
+              <label>Grupo<br/><input id="fieldGrupo" class="input" type="text" /></label>
+              <label>Matrícula<br/><input id="fieldMatricula" class="input" type="text" /></label>
+              <label>Cuatrimestre<br/><input id="fieldCuatrimestre" class="input" type="text" /></label>
+              <label>Correo<br/><input id="fieldEmail" class="input" type="email" /></label>
+              <label>Nueva contraseña (opcional)<br/><input id="fieldPassword" class="input" type="password" placeholder="Dejar vacío para mantener la actual" /></label>
+              <div style="display:flex; gap:8px; justify-content:center; margin-top:8px;">
+                <button id="saveProfileBtn" class="btn" type="button">Guardar</button>
+                <button id="cancelEditBtn" class="btn" type="button">Cancelar</button>
+              </div>
+            </form>
           </div>
-          <a class="btn-back" href="login.html">Cerrar sesión</a>
         </aside>
 
         <main class="formulario">
@@ -37,13 +57,16 @@
           <div class="card">
             <div class="card-inner">
               <div class="card-row">
-                <img src="assets/alergia.jpg" alt="ilustracion" class="card-thumb">
                 <div class="card-text">
                   <h3>¿Alergia alimentaria?</h3>
-                  <p class="muted">Indique si es alérgico a algún tipo de comida.</p>
-                  <div class="input-like">Ej: Nueces, mariscos, fresas...</div>
+                  <p class="muted">Indique si es alérgico a algún tipo de comida. (Registradas en su perfil)</p>
+                  <textarea id="allergyText" class="input" placeholder="Ej: Nueces, mariscos, fresas..."></textarea>
+                  <div style="margin-top:8px;display:flex;gap:8px;">
+                    <button id="saveAllergyBtn" class="btn">Guardar alergia</button>
+                    <button id="loadAllergiesBtn" class="btn" type="button">Ver mis alergias</button>
+                  </div>
+                  <ul id="allergyList" style="margin-top:8px;list-style:disc;padding-left:18px;"></ul>
                 </div>
-                <button class="guardar">Guardar</button>
               </div>
             </div>
           </div>
@@ -51,13 +74,15 @@
           <div class="card">
             <div class="card-inner">
               <div class="card-row">
-                <img src="assets/buzon.png" alt="mail" class="card-thumb">
                 <div class="card-text">
-                  <h3>¿Comentarios o quejas?</h3>
-                  <p class="muted">Comparte tus comentarios o quejas para mejorar nuestro servicio.</p>
-                  <div class="input-like">Escriba aquí sus comentarios</div>
+                  <h3>Comentarios o sugerencias</h3>
+                  <p class="muted">Comparte tus comentarios o sugerencias; se guardarán en el sistema.</p>
+                  <textarea id="commentText" class="input" placeholder="Escriba aquí sus comentarios"></textarea>
+                  <div style="margin-top:8px;display:flex;gap:8px;">
+                    <button id="sendCommentBtn" class="btn">Enviar</button>
+                  </div>
+                  <ul id="commentList" style="margin-top:8px;list-style:disc;padding-left:18px;"></ul>
                 </div>
-                <button class="enviar">Enviar</button>
               </div>
 
 
@@ -82,6 +107,173 @@
         }
         // otherwise allow the anchor href to navigate to login.html
       });
+    })();
+  </script>
+  <script>
+    // Requerir sesión válida y poblar perfil; manejar edición
+    (function(){
+      const token = localStorage.getItem('bocaditos_token');
+      const userStr = localStorage.getItem('bocaditos_user');
+      if (!token || !userStr) { window.location.href = 'login.html'; return; }
+
+      const user = JSON.parse(userStr);
+      const api = 'http://localhost:3000';
+
+      async function loadProfile() {
+        try {
+          const res = await fetch(api + '/me', { headers: { 'Authorization': 'Bearer ' + token }});
+          if (!res.ok) {
+            localStorage.removeItem('bocaditos_token'); localStorage.removeItem('bocaditos_user'); window.location.href = 'login.html'; return;
+          }
+          const data = await res.json();
+          // Fill UI
+          document.getElementById('displayName').textContent = data.name || data.email || 'Usuario';
+          document.getElementById('profileName').textContent = data.name || '-';
+          document.getElementById('profileApellido').textContent = data.apellido || '-';
+          document.getElementById('profileTelefono').textContent = data.telefono || '-';
+          document.getElementById('profileMatricula').textContent = data.matricula || '-';
+          document.getElementById('profileCuatrimestre').textContent = data.cuatrimestre || '-';
+          document.getElementById('profileEmail').textContent = data.email || '-';
+          document.getElementById('profileCarrera').textContent = data.carrera || '-';
+          document.getElementById('profileGrupo').textContent = data.grupo || '-';
+          document.getElementById('profileRole').textContent = data.roleName || (data.id_rol ? 'Rol #' + data.id_rol : 'Usuario');
+          // set form fields
+          document.getElementById('fieldName').value = data.name || '';
+          document.getElementById('fieldApellido').value = data.apellido || '';
+          document.getElementById('fieldTelefono').value = data.telefono || '';
+          document.getElementById('fieldMatricula').value = data.matricula || '';
+          document.getElementById('fieldCuatrimestre').value = data.cuatrimestre || '';
+          document.getElementById('fieldEmail').value = data.email || '';
+          document.getElementById('fieldCarrera').value = data.carrera || '';
+          document.getElementById('fieldGrupo').value = data.grupo || '';
+          // avatar: if you have a user avatar url, set it; otherwise keep default
+          const avatar = document.getElementById('avatarImg');
+          if (data.avatarUrl) { avatar.src = data.avatarUrl; }
+          // store fresh user in localStorage
+          localStorage.setItem('bocaditos_user', JSON.stringify(data));
+          // save user's id for updates
+          window.__currentUserId = data.id;
+          // If carrera or grupo are missing, open the "Completa tus datos" form automatically
+          if (!data.carrera || !data.grupo) {
+            try {
+              const editBtn = document.getElementById('editProfileBtn');
+              const editForm = document.getElementById('editProfileForm');
+              if (editForm && editBtn) {
+                editForm.style.display = 'block';
+                editBtn.style.display = 'none';
+                // focus first missing field
+                const focused = (data.carrera ? 'fieldGrupo' : 'fieldCarrera');
+                const el = document.getElementById(focused);
+                if (el) el.focus();
+              }
+            } catch (e) {
+              // ignore UI focus errors
+            }
+          }
+        } catch (err) {
+          console.error('Could not load profile', err);
+          localStorage.removeItem('bocaditos_token'); localStorage.removeItem('bocaditos_user'); window.location.href = 'login.html';
+        }
+      }
+
+      // Edit controls
+      const editBtn = document.getElementById('editProfileBtn');
+      const editForm = document.getElementById('editProfileForm');
+      const cancelBtn = document.getElementById('cancelEditBtn');
+      const saveBtn = document.getElementById('saveProfileBtn');
+
+      editBtn.addEventListener('click', function(){ editForm.style.display = 'block'; editBtn.style.display = 'none'; });
+      cancelBtn.addEventListener('click', function(){ editForm.style.display = 'none'; editBtn.style.display = 'inline-block'; });
+
+      saveBtn.addEventListener('click', async function(){
+        const id = window.__currentUserId;
+        if (!id) { alert('Usuario no cargado'); return; }
+        const payload = {
+          name: document.getElementById('fieldName').value.trim(),
+          apellido: document.getElementById('fieldApellido').value.trim(),
+          telefono: document.getElementById('fieldTelefono').value.trim(),
+          matricula: document.getElementById('fieldMatricula').value.trim(),
+          cuatrimestre: document.getElementById('fieldCuatrimestre').value.trim(),
+          email: document.getElementById('fieldEmail').value.trim()
+        };
+        const pass = document.getElementById('fieldPassword').value;
+        if (pass) payload.password = pass;
+
+        try {
+          const res = await fetch(api + '/update-user/' + encodeURIComponent(id), {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (!res.ok) { alert(data.error || 'Error actualizando perfil'); return; }
+          // success: refresh profile display
+          editForm.style.display = 'none'; editBtn.style.display = 'inline-block';
+          await loadProfile();
+          alert('Perfil actualizado');
+        } catch (err) {
+          console.error('Update failed', err);
+          alert('Error conectando al servidor');
+        }
+      });
+
+      // logout link should clear storage
+      document.getElementById('logoutBtn').addEventListener('click', function(){ localStorage.removeItem('bocaditos_token'); localStorage.removeItem('bocaditos_user'); });
+
+      // initial load
+      loadProfile();
+
+      // Allergies handlers
+      document.getElementById('saveAllergyBtn').addEventListener('click', async function(){
+        const text = document.getElementById('allergyText').value.trim();
+        if (!text) { alert('Escribe la alergia antes de guardar'); return; }
+        try {
+          const res = await fetch(api + '/allergies', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: JSON.stringify({ allergy: text }) });
+          if (!res.ok) { const d = await res.json(); alert(d.error || 'Error guardando alergia'); return; }
+          document.getElementById('allergyText').value = '';
+          await loadAllergies();
+        } catch (err) { console.error('Allergy save failed', err); alert('Error conectando al servidor'); }
+      });
+
+      async function loadAllergies(){
+        try {
+          const res = await fetch(api + '/allergies', { headers: { 'Authorization': 'Bearer ' + token } });
+          if (!res.ok) return;
+          const items = await res.json();
+          const ul = document.getElementById('allergyList'); ul.innerHTML = '';
+          items.forEach(it => { const li = document.createElement('li'); li.textContent = it.allergy; ul.appendChild(li); });
+        } catch (err) { console.error('Could not load allergies', err); }
+      }
+
+      document.getElementById('loadAllergiesBtn').addEventListener('click', loadAllergies);
+
+      // Comments handlers
+      document.getElementById('sendCommentBtn').addEventListener('click', async function(){
+        const text = document.getElementById('commentText').value.trim();
+        if (!text) { alert('Escribe un comentario antes de enviar'); return; }
+        try {
+          // send comment authenticated; server will set the user id from the token
+          const res = await fetch(api + '/posts', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: JSON.stringify({ comment: text }) });
+          if (!res.ok) { const d = await res.json(); alert(d.message || d.error || 'Error enviando comentario'); return; }
+          document.getElementById('commentText').value = '';
+          await loadComments();
+        } catch (err) { console.error('Comment save failed', err); alert('Error conectando al servidor'); }
+      });
+
+      async function loadComments(){
+        try {
+          const res = await fetch(api + '/posts');
+          if (!res.ok) return;
+          const items = await res.json();
+          const ul = document.getElementById('commentList'); ul.innerHTML = '';
+          // show only current user's comments
+          items.filter(it => (it.user && it.user.id) === window.__currentUserId).forEach(it => { const li = document.createElement('li'); li.textContent = it.comment; ul.appendChild(li); });
+        } catch (err) { console.error('Could not load comments', err); }
+      }
+
+      // load recent user comments & allergies
+      loadAllergies();
+      loadComments();
     })();
   </script>
 </body>

@@ -66,5 +66,44 @@
       </div>
     </div>
   </div>
+</div>
+
+  <script>
+    // Verificación de sesión: redirige al login si no hay token o token inválido
+    (async function(){
+      try {
+        var token = localStorage.getItem('bocaditos_token');
+        var userStr = localStorage.getItem('bocaditos_user');
+        if (!token || !userStr) {
+          window.location.href = 'login.html';
+          return;
+        }
+        var user = JSON.parse(userStr);
+        // Verificar token llamando al endpoint /me (más eficiente)
+        var res = await fetch('http://localhost:3000/me', {
+          method: 'GET',
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) {
+          // token inválido o expirado
+          localStorage.removeItem('bocaditos_token');
+          localStorage.removeItem('bocaditos_user');
+          window.location.href = 'login.html';
+          return;
+        }
+        var fresh = await res.json();
+        // Actualizar nombre mostrado si existe un elemento correspondiente
+        var nameEls = document.querySelectorAll('.usuario h2');
+        if (nameEls && nameEls.length) {
+          nameEls.forEach(function(el){ el.textContent = fresh.name || (fresh.email || 'Usuario'); });
+        }
+      } catch (err) {
+        console.error('Session check failed', err);
+        localStorage.removeItem('bocaditos_token');
+        localStorage.removeItem('bocaditos_user');
+        window.location.href = 'login.html';
+      }
+    })();
+  </script>
 </body>
 </html>
