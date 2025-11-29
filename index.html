@@ -13,58 +13,85 @@
     <div class="panel">
       <div class="panel-inner">
         <aside class="usuario">
-          <h2>Nombre de usuario</h2>
-          <img src="assets/piña.png" alt="Avatar" class="avatar" />
-          <div style="text-align:center">
-            <span class="estado activo">Activo</span>
-            <span class="estado baja">Baja</span>
+          <div class="user-box">
+            <h2 class="user-title">Nombre de usuario</h2>
+            <div class="user-top">
+              <div class="avatar-wrap">
+                <img src="assets/piña.png" alt="Avatar" class="avatar" />
+              </div>
+              <div class="status-group">
+                <button class="status-btn active"><span>Activo</span></button>
+                <button class="status-btn inactive"><span>Baja</span></button>
+              </div>
+            </div>
+            <div class="profile-box">
+              <p><strong>Rol de usuario:</strong> Beneficiario</p>
+              <p><strong>Carrera:</strong> Lic. en patitos</p>
+            </div>
           </div>
-          <div class="profile-box">
-            <p><strong>Rol de usuario:</strong> Beneficiario</p>
-            <p><strong>Carrera:</strong> Lic. en patitos</p>
-            <hr />
+
+          <div class="info-panel">
+            <div class="info-title">Información del usuario</div>
             <p><strong>Matrícula:</strong> 1234 56789</p>
             <p><strong>Grupo:</strong> Plaza Sésamo</p>
             <p><strong>Cuatrimestre:</strong> XOXOXOXOXO</p>
+            <a class="btn-logout" href="login.html">Cerrar Sesión</a>
           </div>
-          <button class="cerrar">Cerrar sesión</button>
         </aside>
 
         <main class="formulario">
-          <div class="panel-title">Panel</div>
-          <div class="chip">Bienvenida</div>
+          <div class="right-panel">
+            <div class="panel-title">Panel</div>
+            <div class="chip">Bienvenida</div>
 
-          <div class="card">
-            <div class="card-inner">
-              <div class="card-row">
-                <img src="assets/alergia.jpg" alt="ilustracion" class="card-thumb">
-                <div class="card-text">
-                  <h3>¿Alergia alimentaria?</h3>
-                  <p class="muted">Indique si es alérgico a algún tipo de comida.</p>
-                  <div class="input-like">Ej: Nueces, mariscos, fresas...</div>
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-row">
+                  <img src="assets/alergia.jpg" alt="ilustracion" class="card-thumb">
+                  <div class="card-text">
+                    <h3>¿Alergia alimentaria?</h3>
+                    <p class="muted">Indique si es alérgico a algún tipo de comida.</p>
+                    <input type="text" class="input-like" placeholder="Ej: Nueces, mariscos, fresas...">
+                  </div>
+                  <button class="guardar">Guardar</button>
                 </div>
-                <button class="guardar">Guardar</button>
               </div>
             </div>
-          </div>
 
-          <div class="card">
-            <div class="card-inner">
-              <div class="card-row">
-                <img src="assets/buzon.png" alt="mail" class="card-thumb">
-                <div class="card-text">
-                  <h3>¿Comentarios o quejas?</h3>
-                  <p class="muted">Comparte tus comentarios o quejas para mejorar nuestro servicio.</p>
-                  <div class="input-like">Escriba aquí sus comentarios</div>
+            <div class="card">
+              <div class="card-inner">
+                <div class="card-row">
+                  <img src="assets/buzon.png" alt="mail" class="card-thumb">
+                  <div class="card-text">
+                    <h3>¿Comentarios o quejas?</h3>
+                    <p class="muted">Comparte tus comentarios o quejas para mejorar nuestro servicio.</p>
+                    <textarea class="input-like" placeholder="Escriba aquí sus comentarios"></textarea>
+                  </div>
+                  <button class="enviar">Enviar</button>
                 </div>
-                <button class="enviar">Enviar</button>
               </div>
             </div>
-          </div>
 
+          </div>
         </main>
       </div>
     </div>
   </div>
+  <script>
+    // Back button: prefer history.back() when possible, fallback to login.html
+    (function(){
+      var back = document.querySelector('.btn-back');
+      if (!back) return;
+      back.addEventListener('click', function(e){
+        // If referrer is same origin or history has entries, go back
+        var canGoBack = (document.referrer && document.referrer.indexOf(location.hostname) !== -1) || history.length > 1;
+        if (canGoBack) {
+          e.preventDefault();
+          history.back();
+        }
+        // otherwise allow the anchor href to navigate to login.html
+      });
+    })();
+  </script>
 </body>
 </html>

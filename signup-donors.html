@@ -12,45 +12,21 @@
   <main class="centered-page">
     <div class="login-layout">
       <div class="left">
-        <div style="width:100%; max-width:420px; margin:0 auto;">
+          <div style="width:100%; max-width:720px; margin:0 auto;">
           
-          <div class="emblem" style="margin-left:0;">
-            <svg class="scribble" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-              <path d="M100,10 C140,10 180,40 190,80 C200,120 170,160 130,170 C90,180 50,150 40,110 C30,70 60,30 100,10 Z" fill="none" stroke="#3b0709" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.95" />
-              <path d="M120,20 C150,30 175,60 170,95 C165,130 140,155 110,165" fill="none" stroke="#3b0709" stroke-width="2" stroke-linecap="round" opacity="0.6" />
-            </svg>
-            <img src="assets/oso.png" alt="Oso" onerror="this.onerror=null;this.src='assets/piña.png'">
-          </div>
-          <svg class="arc-text" viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-            <defs>
-              <path id="arcPath" d="M20,90 A100,100 0 0,1 240,90" />
-            </defs>
-            <text font-family="Poppins, sans-serif" font-weight="700" font-size="18" fill="#8a1d2b">
-              <textPath href="#arcPath" startOffset="10%" letter-spacing="6">S I G N &nbsp; U P</textPath>
-            </text>
-          </svg>
-          <div class="signup-subtitle">FOR DONORS</div>
-
+          <!-- Formulario tipo 'pills' para donors (vista solicitada) -->
           <div class="form-card" style="margin-top:18px;">
-            <form class="form-pills" action="index.html" method="get">
-              <input class="pill-input" name="nombre" type="text" placeholder="Nombre" required>
-              <input class="pill-input" name="apellido" type="text" placeholder="Apellido" required>
+            <form class="form-pills" action="login.html" method="get">
+              <input class="pill-input" name="razon" type="text" placeholder="Razon social" required>
+              <input class="pill-input" name="rfc" type="text" placeholder="RFC">
               <input class="pill-input" name="telefono" type="tel" placeholder="Telefono">
-              <input class="pill-input" name="donacion" type="text" placeholder="Tipo de donacion">
               <input class="pill-input" name="correo" type="email" placeholder="Correo" required>
-              <input class="pill-input" name="contrasena" type="password" placeholder="Contraseña" required>
+              <input class="pill-input" name="ubicacion" type="text" placeholder="Ubicacion">
               <div class="submit-row"><button class="submit-btn" type="submit">Crear cuenta</button></div>
             </form>
           </div>
         </div>
       </div>
-      <div class="right">
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;">
-          <div class="sandwich-wrap">
-            <img src="assets/sandwich2.png" alt="Sandwich" class="logo">
-            <h1 class="brand overlay">Bocaditos</h1>
-          </div>
-        </div>
-      </div>
+      <!-- Right column removed — page now shows only the donors table -->
     </div>
   </main>
