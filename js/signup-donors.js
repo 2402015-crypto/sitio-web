@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (err) {
       console.error('Error saving donor profile', err);
     }
-    // Redirect to login with role=donor so login redirects to donor dashboard
+    // Redirigir al inicio de sesión con role=donor para que el inicio de sesión redirija al panel del donante
     window.location.href = 'login.html?role=donor';
   });
 });

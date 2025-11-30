@@ -1,6 +1,6 @@
-// Preload script: currently empty but kept for security (contextIsolation)
-// You can expose safe APIs here via contextBridge if needed.
+// Script de precarga: actualmente vacío, pero mantenido por seguridad (contextIsolation)
+// Puedes exponer APIs seguras aquí a través de contextBridge si es necesario.
 const { contextBridge } = require('electron');
 
-// Example: expose an empty API placeholder
+// Ejemplo: exponer un marcador de posición de API vacío
 contextBridge.exposeInMainWorld('electronAPI', {});

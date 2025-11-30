@@ -78,18 +78,18 @@
     </div>
   </div>
   <script>
-    // Back button: prefer history.back() when possible, fallback to login.html
+    // Botón de retroceso: preferir history.back() cuando sea posible, usar login.html como alternativa// Botón de retroceso: preferir history.back() cuando sea posible, usar login.html como alternativa
     (function(){
       var back = document.querySelector('.btn-back');
       if (!back) return;
       back.addEventListener('click', function(e){
-        // If referrer is same origin or history has entries, go back
+        // Si el referente es del mismo origen o el historial tiene entradas, regresar
         var canGoBack = (document.referrer && document.referrer.indexOf(location.hostname) !== -1) || history.length > 1;
         if (canGoBack) {
           e.preventDefault();
           history.back();
         }
-        // otherwise allow the anchor href to navigate to login.html
+        // de lo contrario permitir que el href del ancla navegue a login.html
       });
     })();
   </script>

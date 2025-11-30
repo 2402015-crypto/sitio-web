@@ -1,19 +1,19 @@
 // app.js - utilidades compartidas
 function logout() {
 	try {
-		// Clear any app-specific state (if used)
+		// Borrar cualquier estado específico de la aplicación (si se utiliza)
 		if (window.localStorage) {
-			// Optionally clear specific keys instead of whole storage
-			// localStorage.removeItem('session');
+			// Opcionalmente, eliminar claves específicas en lugar de todo el almacenamiento
+// localStorage.removeItem('session');
 		}
 	} catch (e) {
-		// ignore storage errors
+		// ignorar errores de almacenamiento
 	}
-	// Provide feedback and navigate to login page
+	// Proporcionar retroalimentación y navegar a la página de inicio de sesión
 	window.location.href = 'login.html';
 }
 
-// Attach handler to any button with class 'cerrar' for pages that use it
+// Adjuntar controlador a cualquier botón con la clase 'cerrar' para las páginas que lo usan
 document.addEventListener('DOMContentLoaded', function () {
 	var btn = document.querySelector('.cerrar');
 	if (btn) {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 });
 
-// Save / Send handlers for the dashboard inputs
+// Controladores de Guardar / Enviar para los inputs del panel
 document.addEventListener('DOMContentLoaded', function () {
 	function showToast(message) {
 		var t = document.createElement('div');

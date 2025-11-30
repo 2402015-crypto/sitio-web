@@ -90,7 +90,7 @@ body {
     position:relative; }
   .right { width:420px; }
 
-  /* Brand / hero */
+  /* Marca / héroe */
   .brand {
     font-family: 'Great Vibes', cursive;
     position: absolute;
@@ -126,7 +126,7 @@ body {
     opacity:0.98; filter: drop-shadow(0 8px 20px 
     rgba(0,0,0,0.06)); }
 
-  /* Form area (login) */
+ /* Área del formulario (inicio de sesión) */
   .form-wrap { 
     background: linear-gradient(180deg,
     #fff8f5,
@@ -215,8 +215,8 @@ body {
      text-decoration:underline; 
     }
 
-  /* Signup options (restored) */
-  .signup-options { 
+  /* Opciones de registro (restauradas) */
+.signup-options {
     display:flex; 
     gap:18px; 
     justify-content:center; 
@@ -295,7 +295,7 @@ body {
        }
   }
 
-  /* Simple table utilities (kept minimal) */
+  /* Utilidades simples de tablas (mantenidas al mínimo) */
   table {
      width:100%;
       border-collapse:collapse;
@@ -307,7 +307,7 @@ body {
      text-align:center; 
     }
 
-/* Styles for the simplified signup-students page */
+/* Estilos para la página de registro simplificada de estudiantes */
 .signup-emblem {
    display:flex;
     align-items:center;
@@ -358,12 +358,38 @@ body {
   z-index: -1;
   border-radius: 30px;
 }
-.form-pills { display:flex; flex-direction:column; gap:18px; }
-.pill-input { width:100%; padding:18px 28px; border-radius:999px; border:none; background:#fff; font-weight:700; text-align:center; box-shadow: 0 8px 0 rgba(0,0,0,0.08); font-size:1rem; }
-.pill-input::placeholder { color:#7a5b5b; font-weight:700; }
-.submit-btn { margin-top:18px; background:#f2c1c2; color:#3b0709; border:none; padding:12px 26px; border-radius:999px; cursor:pointer; font-weight:800; box-shadow: 0 10px 0 rgba(0,0,0,0.12); }
+.form-pills {
+   display:flex; flex-direction:column;
+    gap:18px;
+   }
+.pill-input {
+   width:100%;
+    padding:18px 28px; 
+    border-radius:999px; 
+    border:none; 
+    background:#fff;
+     font-weight:700; text-align:center;
+      box-shadow: 0 8px 0 
+      rgba(0,0,0,0.08); 
+      font-size:1rem; 
+    }
+.pill-input::placeholder {
+   color:#7a5b5b;
+    font-weight:700; 
+  }
+.submit-btn { margin-top:18px;
+   background:#f2c1c2;
+    color:#3b0709;
+     border:none;
+      padding:12px 26px; 
+      border-radius:999px;
+       cursor:pointer;
+        font-weight:800;
+         box-shadow: 0 10px 0 
+         rgba(0,0,0,0.12); 
+        }
 
-/* Donors table styling: white rounded panel centered inside the dark card */
+/* Estilo de la tabla de donantes: panel blanco con bordes redondeados centrado dentro de la tarjeta oscura */
 .donors-wrap {
    background: #fff;
     border-radius:14px;
@@ -461,23 +487,68 @@ body {
   background:#fff3f3; color:#7a1d20; 
 }
 .profile-box{ 
-  background:#fff; padding:12px; border-radius:8px; color:#3b0709; box-shadow: inset 0 -6px 0 rgba(0,0,0,0.02); 
+  background:#fff;
+   padding:12px;
+    border-radius:8px;
+     color:#3b0709;
+      box-shadow: inset 0 -6px 0
+       rgba(0,0,0,0.02); 
 }
 .profile-box p{ 
   margin:8px 0; 
 }
 .btn-back{ 
-  display:inline-block; margin-top:10px; padding:8px 12px; background:transparent; border:1px solid #7a1d20; color:#7a1d20; border-radius:6px; text-decoration:none; font-weight:700; 
+  display:inline-block; margin-top:10px; 
+  padding:8px 12px;
+   background:transparent;
+    border:1px solid #7a1d20;
+     color:#7a1d20;
+      border-radius:6px;
+       text-decoration:none;
+        font-weight:700; 
 }
 
-.formulario .panel-title{ font-size:1.4rem; color:#5a1216; font-weight:800; margin-bottom:8px; }
-.formulario .chip{ display:inline-block; background:#fff3f3; color:#7a1d20; padding:6px 10px; border-radius:12px; font-weight:700; margin-bottom:14px; }
-.card{ background:#fff; border-radius:12px; padding:0; box-shadow:0 12px 30px rgba(0,0,0,0.06); margin-bottom:18px; overflow:hidden; }
-.card-inner{ padding:14px; }
-.card-row{ display:flex; gap:12px; align-items:center; }
-.card-thumb{ width:220px; max-width:35%; height:auto; border-radius:8px; object-fit:cover; }
-.card-text h3{ margin:0 0 6px; color:#5a1216; }
-.muted{ color:#7a5b5b; margin:0 0 8px; }
+.formulario .panel-title{ font-size:1.4rem;
+   color:#5a1216;
+    font-weight:800; 
+    margin-bottom:8px; 
+  }
+.formulario .chip{ 
+  display:inline-block;
+   background:#fff3f3; 
+   color:#7a1d20; 
+   padding:6px 10px; 
+   border-radius:12px; font-weight:700; 
+   margin-bottom:14px; 
+  }
+.card{ 
+  background:#fff;
+   border-radius:12px; 
+   padding:0; box-shadow:0 12px 30px rgba(0,0,0,0.06); 
+   margin-bottom:18px; 
+   overflow:hidden; 
+  }
+.card-inner{
+   padding:14px; 
+  }
+.card-row{ display:flex;
+   gap:12px; 
+   align-items:center; 
+  }
+.card-thumb{
+   width:220px;
+    max-width:35%;
+    height:auto;
+     border-radius:8px;
+      object-fit:cover; 
+    }
+.card-text h3{ 
+  margin:0 0 6px; 
+  color:#5a1216;
+ }
+.muted{ color:#7a5b5b; 
+  margin:0 0 8px; 
+}
 .input-like{
   background:#fbf7f6;
   padding:10px 12px;
@@ -491,9 +562,27 @@ body {
   font-size:0.95rem;
   box-shadow: inset 0 -6px 0 rgba(0,0,0,0.02);
 }
-.input-like:focus{ border-color:#e9cfcf; box-shadow:0 0 0 6px rgba(184,74,79,0.04); }
-textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding-bottom:12px; }
-.guardar, .enviar{ margin-left:auto; background:#f2c1c2; border:none; padding:10px 14px; border-radius:20px; font-weight:800; color:#3b0709; cursor:pointer; box-shadow:0 8px 0 rgba(0,0,0,0.08); }
+.input-like:focus{
+   border-color:#e9cfcf; 
+   box-shadow:0 0 0 6px 
+   rgba(184,74,79,0.04);
+   }
+textarea.input-like{ min-height:84px;
+   resize:vertical;
+    padding-top:12px; 
+    padding-bottom:12px; 
+  }
+.guardar, .enviar{ 
+  margin-left:auto;
+   background:#f2c1c2; border:none; 
+   padding:10px 14px; 
+   border-radius:20px; 
+   font-weight:800; 
+   color:#3b0709;
+    cursor:pointer; 
+    box-shadow:0 8px 0
+     rgba(0,0,0,0.08); 
+    }
 
 @media (max-width:900px){
   .panel-inner{ grid-template-columns: 1fr; }
@@ -502,7 +591,7 @@ textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding
   .guardar, .enviar{ margin-left:0; align-self:flex-end; }
 }
 
-/* Left panel visual polish */
+/* Pulido visual del panel izquierdo */
 .usuario{ 
   border:6px dotted 
   rgba(59,7,9,0.6); 
@@ -606,7 +695,7 @@ textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding
              rgba(0,0,0,0.14); 
             }
 
-/* Right panel background to emulate burgundy frame */
+/* Fondo del panel derecho para emular marco burdeos */
 .right-panel{ 
   background:#3b0709;
    border-radius:22px; padding:36px; 
@@ -629,7 +718,7 @@ textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding
        display:inline-block; 
       }
 
-/* card decorative rounded border inside white panel */
+/* borde decorativo redondeado de tarjeta dentro del panel blanco */
 .right-panel .card{
    border-radius:14px;
     border:2px dashed 
@@ -656,7 +745,7 @@ textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding
   .status-group{ flex-direction:row; }
 }
 
-/* Toast notification used by app.js */
+/* Notificación tipo toast utilizada por app.js */
 .bt-toast{
    position:fixed;
     left:50%;
@@ -674,34 +763,167 @@ textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding
    transform:translateX(-50%) translateY(0); 
   }
 
-/* Donor panel styles */
-.donor-layout{ display:grid; grid-template-columns:260px 1fr 560px; gap:28px; min-height:100vh; background:#231414; padding:26px; }
-.donor-nav{ background:#fff; border-radius:8px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; border:6px dotted rgba(59,7,9,0.2); }
-.donor-nav .brand{ font-family:'Great Vibes', cursive; font-size:34px; text-align:center; margin-bottom:18px; }
-.donor-nav ul{ list-style:none; padding:0; margin:0; }
-.donor-nav li{ padding:12px 16px; border-radius:8px; margin-bottom:8px; font-weight:700; }
-.donor-nav li.active{ background:#dbeef6; color:#1b4350; box-shadow:0 6px 0 rgba(0,0,0,0.06); }
-.donor-nav .chat{ margin-top:12px; font-weight:800; }
+/* Estilos del panel de donantes */
+.donor-layout{
+   display:grid;
+    grid-template-columns:260px 1fr 560px;
+     gap:28px; 
+     min-height:100vh; 
+     background:#231414; 
+     padding:26px; 
+    }
+.donor-nav{
+   background:#fff;
+    border-radius:8px;
+     padding:22px; 
+     display:flex;
+      flex-direction:column; 
+      justify-content:space-between; 
+      border:6px dotted 
+      rgba(59,7,9,0.2); 
+    }
+.donor-nav .brand{
+   font-family:'Great Vibes', cursive;
+    font-size:34px;
+     text-align:center; 
+     margin-bottom:18px; 
+    }
+.donor-nav ul{ list-style:none;
+   padding:0; 
+   margin:0; 
+  }
+.donor-nav li{ padding:12px 16px; border-radius:8px; 
+  margin-bottom:8px; 
+  font-weight:700; 
+}
+.donor-nav li.active{ 
+  background:#dbeef6; color:#1b4350; 
+  box-shadow:0 6px 0 
+  rgba(0,0,0,0.06); 
+}
+.donor-nav .chat{ margin-top:12px; 
+  font-weight:800; 
+}
 
-.donor-main{ display:flex; gap:28px; align-items:flex-start; }
-.donor-card{ background:#e9f6fb; padding:20px; border-radius:12px; width:520px; min-height:520px; box-shadow:0 12px 26px rgba(0,0,0,0.12); }
-.donor-header{ font-size:28px; font-weight:800; text-align:center; margin-bottom:10px; }
-.avatar-wrap{ display:flex; justify-content:center; margin:8px 0 12px; }
-.avatar{ width:96px; height:96px; border-radius:50%; background:#fff; padding:8px; box-shadow:0 12px 28px rgba(0,0,0,0.12); }
-.status-buttons{ display:flex; gap:12px; justify-content:center; margin-bottom:12px; }
-.status{ padding:6px 12px; border-radius:18px; font-weight:800; }
-.status.active{ background:#2e8b57; color:#fff; }
-.status.inactive{ background:#f2c1c2; color:#7a1d20; }
-.btn-logout{ display:block; margin:8px auto 18px; background:linear-gradient(180deg,#f5a399,#e86a5c); color:#fff; padding:10px 18px; border-radius:18px; border:none; cursor:pointer; }
-.info-grid{ display:grid; grid-template-columns:120px 1fr; gap:8px 18px; margin-top:12px; color:#3b0709; }
+.donor-main{ 
+  display:flex; gap:28px;
+   align-items:flex-start;
+   }
+.donor-card{
+   background:#e9f6fb;
+    padding:20px;
+     border-radius:12px;
+      width:520px;
+       min-height:520px;
+        box-shadow:0 12px 26px 
+        rgba(0,0,0,0.12); 
+      }
+.donor-header{
+   font-size:28px;
+    font-weight:800; text-align:center; 
+    margin-bottom:10px; 
+  }
+.avatar-wrap{
+   display:flex;
+    justify-content:center;
+     align-items:center; 
+     margin:8px 0 12px; 
+     width:140px;
+      height:140px;
+       border-radius:50%;
+        background:#fff;
+         box-shadow:0 20px 36px 
+         rgba(0,0,0,0.14);
+          border:8px dashed 
+          rgba(59,7,9,0.06);
+           overflow:hidden; 
+          }
+.avatar{ 
+  width:110px;
+   height:110px;
+    border-radius:50%;
+     background:#fff;
+      padding:0;
+       box-shadow:0 12px 28px 
+       rgba(0,0,0,0.12); 
+       overflow:hidden; 
+       display:flex;
+        align-items:center;
+         justify-content:center; 
+        }
+.status-buttons{
+   display:flex;
+    gap:12px;
+     justify-content:center;
+      margin-bottom:12px; 
+    }
+.status{
+   padding:6px 12px;
+    border-radius:18px;
+     font-weight:800; 
+    }
+.status.active{ 
+  background:#2e8b57; color:#fff; }
+.status.inactive{ 
+  background:#f2c1c2; 
+  color:#7a1d20; 
+}
+.btn-logout{ display:block;
+   margin:8px auto 18px;
+    background:linear-gradient(180deg,#f5a399,#e86a5c);
+     color:#fff;
+      padding:10px 18px;
+       border-radius:18px;
+        border:none;
+         cursor:pointer; 
+        }
+.info-grid{ 
+  display:grid;
+   grid-template-columns:120px 1fr;
+    gap:8px 18px;
+     margin-top:12px;
+      color:#3b0709; 
+    }
 
-.donation-detail{ padding-top:12px; }
-.detail-card{ background:#e6f3f9; border-radius:14px; padding:22px; box-shadow:0 12px 30px rgba(0,0,0,0.06); }
-.detail-title{ font-weight:800; color:#102a33; margin-bottom:10px; text-align:center; }
-.detail-form label{ display:block; margin-bottom:10px; font-weight:700; color:#102a33; }
-.detail-form input{ width:100%; padding:10px 12px; border-radius:999px; border:2px solid #dcdcdc; background:#fff; box-shadow:inset 0 -6px 0 rgba(0,0,0,0.02); }
-.detail-actions{ text-align:center; margin-top:12px; }
-.save-btn{ padding:10px 22px; border-radius:999px; background:#bfdbe6; border:none; font-weight:800; cursor:pointer; }
+.donation-detail{
+   padding-top:12px; 
+  }
+.detail-card{
+   background:#e6f3f9;
+    border-radius:14px; padding:22px;
+     box-shadow:0 12px 30px 
+     rgba(0,0,0,0.06);
+     }
+.detail-title{
+   font-weight:800;
+    color:#102a33; margin-bottom:10px;
+     text-align:center; 
+    }
+.detail-form label{
+   display:block;
+    margin-bottom:10px; font-weight:700;
+     color:#102a33;
+     }
+.detail-form input{
+   width:100%;
+    padding:10px 12px;
+     border-radius:999px;
+      border:2px solid #dcdcdc;
+       background:#fff;
+        box-shadow:inset 0 -6px 0 
+        rgba(0,0,0,0.02);
+       }
+.detail-actions{
+   text-align:center;
+    margin-top:12px;
+   }
+.save-btn{ 
+  padding:10px 22px; border-radius:999px;
+   background:#bfdbe6;
+    border:none;
+     font-weight:800;
+      cursor:pointer; 
+    }
 
 @media (max-width:1100px){
   .donor-layout{ grid-template-columns: 1fr; padding:16px; }
@@ -709,3 +931,7 @@ textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding
   .donor-card{ width:100%; }
   .donation-detail{ width:100%; }
 }
+
+/* logotipo específico del donante ubicado en la esquina superior derecha */
+.avatar img, .avatar-img{ width:120%; height:120%; object-fit:cover; object-position:center 54%; display:block; border-radius:50%; border:6px solid rgba(255,255,255,0.96); box-shadow:0 8px 18px rgba(0,0,0,0.12); }
+
