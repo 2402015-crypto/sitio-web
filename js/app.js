@@ -169,13 +169,40 @@ document.addEventListener('DOMContentLoaded', function () {
 			if (!ta) return showToast('No se encontró el campo de comentarios.');
 			var val = ta.value.trim();
 			if (!val) return showToast('Escribe tus comentarios antes de enviar.');
+
+			var token = localStorage.getItem('bocaditos_token');
+			if (token) {
+				// send to backend
+				fetch('http://localhost:3000/me/comments', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+					body: JSON.stringify({ comment: val })
+				}).then(function (res) {
+					if (!res.ok) return res.json().then(function (j) { throw j; });
+					return res.json();
+				}).then(function (json) {
+					ta.value = '';
+					showToast('Comentario enviado.');
+				}).catch(function (err) {
+					console.warn('Could not send comment to server, saving locally', err);
+					try {
+						var arr = JSON.parse(localStorage.getItem('bocaditos_comentarios') || '[]');
+						arr.push({ text: val, ts: Date.now() });
+						localStorage.setItem('bocaditos_comentarios', JSON.stringify(arr));
+						ta.value = '';
+						showToast('Comentario guardado localmente.');
+					} catch (e) { console.error(e); showToast('Error al enviar.'); }
+				});
+				return;
+			}
+
+			// no token: save locally
 			try {
-				// Simular envío guardando en localStorage; reemplaza con fetch() si tienes backend
 				var arr = JSON.parse(localStorage.getItem('bocaditos_comentarios') || '[]');
 				arr.push({ text: val, ts: Date.now() });
 				localStorage.setItem('bocaditos_comentarios', JSON.stringify(arr));
 				ta.value = '';
-				showToast('Comentario enviado.');
+				showToast('Comentario guardado localmente.');
 			} catch (err) {
 				console.error(err);
 				showToast('Error al enviar.');

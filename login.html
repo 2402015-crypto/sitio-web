@@ -60,39 +60,66 @@
           }
 
           // Intentar sincronizar alergias guardadas en localStorage con el servidor
-          (function trySyncAllergies(){
+          (function trySyncAllergiesAndComments(){
+            // Helper: redirect to index
+            function doRedirect(){ window.location.href = 'index.html'; }
+
+            // Sync allergies first (if any), then comments
             try {
-              var stored = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]');
-              if (!stored || !stored.length) {
-                // nothing to sync -> redirect
-                window.location.href = 'index.html';
-                return;
-              }
+              var storedA = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]');
+            } catch(e) { var storedA = []; }
 
-              // extract descriptions (stored may be objects {value,ts})
-              var payload = stored.map(function(s){ return (s && s.value) ? s.value : (typeof s === 'string' ? s : null); }).filter(Boolean);
-              if (!payload.length) { window.location.href = 'index.html'; return; }
+            var allergyPayload = (storedA || []).map(function(s){ return (s && s.value) ? s.value : (typeof s === 'string' ? s : null); }).filter(Boolean);
 
-              // POST to backend
-              fetch('http://localhost:3000/me/allergies', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (data.token || '') },
-                body: JSON.stringify({ allergies: payload })
-              }).then(function(res){
-                if (!res.ok) return res.json().then(function(j){ throw j; });
-                return res.json();
-              }).then(function(result){
-                try { localStorage.removeItem('bocaditos_alergias'); } catch(e){}
-                window.location.href = 'index.html';
-              }).catch(function(err){
-                console.warn('Allergy sync failed, keeping local copy', err);
-                // proceed to redirect even if sync failed
-                window.location.href = 'index.html';
+            function syncCommentsThenRedirect(){
+              try {
+                var storedC = JSON.parse(localStorage.getItem('bocaditos_comentarios') || '[]');
+              } catch(e) { var storedC = []; }
+              var comments = (storedC || []).map(function(c){ return (c && c.text) ? c.text : (typeof c === 'string' ? c : null); }).filter(Boolean);
+              if (!comments.length) { doRedirect(); return; }
+
+              // send each comment to backend (sequentially or in parallel)
+              var tokenHeader = 'Bearer ' + (data.token || '');
+              var reqs = comments.map(function(txt){
+                return fetch('http://localhost:3000/me/comments', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Authorization': tokenHeader },
+                  body: JSON.stringify({ comment: txt })
+                }).then(function(res){ if (!res.ok) return res.json().then(function(j){ throw j; }); return res.json(); });
               });
-            } catch (err) {
-              console.warn('Could not parse bocaditos_alergias', err);
-              window.location.href = 'index.html';
+
+              Promise.all(reqs).then(function(){
+                try { localStorage.removeItem('bocaditos_comentarios'); } catch(e){}
+                doRedirect();
+              }).catch(function(err){
+                console.warn('Comments sync failed, keeping local copy', err);
+                doRedirect();
+              });
             }
+
+            if (!allergyPayload.length) {
+              // No allergies to sync, continue to comments
+              syncCommentsThenRedirect();
+              return;
+            }
+
+            // POST allergies batch
+            fetch('http://localhost:3000/me/allergies', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (data.token || '') },
+              body: JSON.stringify({ allergies: allergyPayload })
+            }).then(function(res){
+              if (!res.ok) return res.json().then(function(j){ throw j; });
+              return res.json();
+            }).then(function(result){
+              try { localStorage.removeItem('bocaditos_alergias'); } catch(e){}
+              // then sync comments
+              syncCommentsThenRedirect();
+            }).catch(function(err){
+              console.warn('Allergy sync failed, keeping local copy', err);
+              // still try to sync comments even if allergies failed
+              syncCommentsThenRedirect();
+            });
           })();
         } catch (err) {
           console.error('Login network error', err);
