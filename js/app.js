@@ -15,6 +15,55 @@ function logout() {
 
 // Adjuntar controlador a cualquier botón con la clase 'cerrar' para las páginas que lo usan
 document.addEventListener('DOMContentLoaded', function () {
+	// Populate user display (Nombre + Apellido) in pages that have .user-title
+	(function populateUserTitle(){
+		try {
+			var el = document.querySelector('.user-title');
+			if (!el) return;
+
+			// Prefer backend /me if token exists
+			var token = localStorage.getItem('bocaditos_token');
+			if (token) {
+				fetch('http://localhost:3000/me', {
+					method: 'GET',
+					headers: { 'Authorization': 'Bearer ' + token }
+				}).then(function(res){
+					if (!res.ok) throw new Error('no-auth');
+					return res.json();
+				}).then(function(user){
+					if (!user) return;
+					var name = (user.name || user.nombre || '').trim();
+					var apellido = (user.apellido || '').trim();
+					var display = name + (apellido ? ' ' + apellido : '');
+					if (display) el.textContent = display;
+				}).catch(function(){
+					// fallback to localStorage user if available
+					try {
+						var u = JSON.parse(localStorage.getItem('bocaditos_user') || 'null');
+						if (u && (u.name || u.nombre)) {
+							var n = (u.name || u.nombre).trim();
+							var a = (u.apellido || '').trim();
+							el.textContent = n + (a ? ' ' + a : '');
+						}
+					} catch (e){/* ignore */}
+				});
+				return;
+			}
+
+			// No token: try localStorage
+			try {
+				var u2 = JSON.parse(localStorage.getItem('bocaditos_user') || 'null');
+				if (u2 && (u2.name || u2.nombre)) {
+					var nn = (u2.name || u2.nombre).trim();
+					var aa = (u2.apellido || '').trim();
+					el.textContent = nn + (aa ? ' ' + aa : '');
+				}
+			} catch (e) { /* ignore parse errors */ }
+		} catch (err) {
+			// don't break page
+			console.warn('populateUserTitle error', err);
+		}
+	})();
 	var btn = document.querySelector('.cerrar');
 	if (btn) {
 		btn.addEventListener('click', function (e) {

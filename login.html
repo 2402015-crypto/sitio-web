@@ -15,13 +15,13 @@
       <div class="avatar"><img src="assets/gato.png" alt="avatar"></div>
       <h2>LOGIN</h2>
       <form id="loginForm">
-        <input class="input" type="email" placeholder="EMAIL ID" required>
-        <input class="input" type="password" placeholder="PASSWORD" required>
+        <input class="input" name="email" type="email" placeholder="EMAIL ID" required>
+        <input class="input" name="password" type="password" placeholder="PASSWORD" required>
         <label class="remember"><input type="checkbox"> REMEMBER ME</label>
         <div class="submit-row"><button class="btn" type="submit">LOG IN</button></div>
         <a class="forgot" href="#">Reset your password</a>
         <div class="signup-options" style="margin-top:18px;">
-          <a class="signup-large" href="signup-students.html">Sign in for students</a>
+          <a class="signup-large" href="signup-students.html">Registro beneficiarios</a>
           <a class="signup-large" href="signup-donors.html">Sign in for donors</a>
         </div>
       </form>
@@ -31,17 +31,39 @@
     (function(){
       var form = document.getElementById('loginForm');
       if (!form) return;
-      form.addEventListener('submit', function(e){
+      form.addEventListener('submit', async function(e){
         e.preventDefault();
-        // Obtener role desde el formulario o desde querystring
         var fd = new FormData(form);
-        var role = fd.get('role') || (new URLSearchParams(location.search)).get('role');
-        // validacion o llamado a la API real
-        if (role === 'donor') {
-          window.location.href = 'dashboard-donador.html';
-        } else {
-          // por defecto ir a la página de usuarios/índice
+        var email = fd.get('email');
+        var password = fd.get('password');
+
+        try {
+          var resp = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
+          });
+
+          if (!resp.ok) {
+            var err = await resp.json().catch(()=>({ error: 'Invalid credentials' }));
+            alert(err.error || 'Error al iniciar sesión');
+            return;
+          }
+
+          var data = await resp.json();
+          // backend devuelve { user: {...}, token: '...' }
+          if (data.token) {
+            localStorage.setItem('bocaditos_token', data.token);
+          }
+          if (data.user) {
+            localStorage.setItem('bocaditos_user', JSON.stringify(data.user));
+          }
+
+          // Redirigir al dashboard de usuario por defecto
           window.location.href = 'index.html';
+        } catch (err) {
+          console.error('Login network error', err);
+          alert('No se pudo conectar al servidor');
         }
       });
       // Agregar handlers para las opciones de signup dentro del formulario
