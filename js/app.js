@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		setTimeout(function () { t.classList.remove('visible'); setTimeout(function () { t.remove(); }, 400); }, 2500);
 	}
 
-	// Guardar alergias (localStorage)
+	// Guardar alergias (intenta backend si hay token, si no guarda localmente)
 	document.querySelectorAll('.guardar').forEach(function (btn) {
 		btn.addEventListener('click', function (e) {
 			e.preventDefault();
@@ -120,6 +120,33 @@ document.addEventListener('DOMContentLoaded', function () {
 			if (!input) return showToast('No se encontró el campo para guardar.');
 			var val = input.value.trim();
 			if (!val) return showToast('Escribe algo antes de guardar.');
+
+			var token = localStorage.getItem('bocaditos_token');
+			if (token) {
+				// send to backend
+				fetch('http://localhost:3000/me/allergies', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+					body: JSON.stringify({ allergies: [val] })
+				}).then(function (res) {
+					if (!res.ok) return res.json().then(function (j) { throw j; });
+					return res.json();
+				}).then(function (json) {
+					showToast('Alergia guardada en el servidor.');
+					input.value = '';
+				}).catch(function (err) {
+					console.warn('Could not save allergy to server, falling back to localStorage', err);
+					try {
+						var stored = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]');
+						stored.push({ value: val, ts: Date.now() });
+						localStorage.setItem('bocaditos_alergias', JSON.stringify(stored));
+						showToast('Alergia guardada localmente.');
+					} catch (e) { showToast('Error al guardar.'); }
+				});
+				return;
+			}
+
+			// no token: save locally
 			try {
 				var stored = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]');
 				stored.push({ value: val, ts: Date.now() });

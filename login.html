@@ -59,8 +59,41 @@
             localStorage.setItem('bocaditos_user', JSON.stringify(data.user));
           }
 
-          // Redirigir al dashboard de usuario por defecto
-          window.location.href = 'index.html';
+          // Intentar sincronizar alergias guardadas en localStorage con el servidor
+          (function trySyncAllergies(){
+            try {
+              var stored = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]');
+              if (!stored || !stored.length) {
+                // nothing to sync -> redirect
+                window.location.href = 'index.html';
+                return;
+              }
+
+              // extract descriptions (stored may be objects {value,ts})
+              var payload = stored.map(function(s){ return (s && s.value) ? s.value : (typeof s === 'string' ? s : null); }).filter(Boolean);
+              if (!payload.length) { window.location.href = 'index.html'; return; }
+
+              // POST to backend
+              fetch('http://localhost:3000/me/allergies', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (data.token || '') },
+                body: JSON.stringify({ allergies: payload })
+              }).then(function(res){
+                if (!res.ok) return res.json().then(function(j){ throw j; });
+                return res.json();
+              }).then(function(result){
+                try { localStorage.removeItem('bocaditos_alergias'); } catch(e){}
+                window.location.href = 'index.html';
+              }).catch(function(err){
+                console.warn('Allergy sync failed, keeping local copy', err);
+                // proceed to redirect even if sync failed
+                window.location.href = 'index.html';
+              });
+            } catch (err) {
+              console.warn('Could not parse bocaditos_alergias', err);
+              window.location.href = 'index.html';
+            }
+          })();
         } catch (err) {
           console.error('Login network error', err);
           alert('No se pudo conectar al servidor');
