@@ -673,3 +673,39 @@ textarea.input-like{ min-height:84px; resize:vertical; padding-top:12px; padding
    opacity:1; 
    transform:translateX(-50%) translateY(0); 
   }
+
+/* Donor panel styles */
+.donor-layout{ display:grid; grid-template-columns:260px 1fr 560px; gap:28px; min-height:100vh; background:#231414; padding:26px; }
+.donor-nav{ background:#fff; border-radius:8px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; border:6px dotted rgba(59,7,9,0.2); }
+.donor-nav .brand{ font-family:'Great Vibes', cursive; font-size:34px; text-align:center; margin-bottom:18px; }
+.donor-nav ul{ list-style:none; padding:0; margin:0; }
+.donor-nav li{ padding:12px 16px; border-radius:8px; margin-bottom:8px; font-weight:700; }
+.donor-nav li.active{ background:#dbeef6; color:#1b4350; box-shadow:0 6px 0 rgba(0,0,0,0.06); }
+.donor-nav .chat{ margin-top:12px; font-weight:800; }
+
+.donor-main{ display:flex; gap:28px; align-items:flex-start; }
+.donor-card{ background:#e9f6fb; padding:20px; border-radius:12px; width:520px; min-height:520px; box-shadow:0 12px 26px rgba(0,0,0,0.12); }
+.donor-header{ font-size:28px; font-weight:800; text-align:center; margin-bottom:10px; }
+.avatar-wrap{ display:flex; justify-content:center; margin:8px 0 12px; }
+.avatar{ width:96px; height:96px; border-radius:50%; background:#fff; padding:8px; box-shadow:0 12px 28px rgba(0,0,0,0.12); }
+.status-buttons{ display:flex; gap:12px; justify-content:center; margin-bottom:12px; }
+.status{ padding:6px 12px; border-radius:18px; font-weight:800; }
+.status.active{ background:#2e8b57; color:#fff; }
+.status.inactive{ background:#f2c1c2; color:#7a1d20; }
+.btn-logout{ display:block; margin:8px auto 18px; background:linear-gradient(180deg,#f5a399,#e86a5c); color:#fff; padding:10px 18px; border-radius:18px; border:none; cursor:pointer; }
+.info-grid{ display:grid; grid-template-columns:120px 1fr; gap:8px 18px; margin-top:12px; color:#3b0709; }
+
+.donation-detail{ padding-top:12px; }
+.detail-card{ background:#e6f3f9; border-radius:14px; padding:22px; box-shadow:0 12px 30px rgba(0,0,0,0.06); }
+.detail-title{ font-weight:800; color:#102a33; margin-bottom:10px; text-align:center; }
+.detail-form label{ display:block; margin-bottom:10px; font-weight:700; color:#102a33; }
+.detail-form input{ width:100%; padding:10px 12px; border-radius:999px; border:2px solid #dcdcdc; background:#fff; box-shadow:inset 0 -6px 0 rgba(0,0,0,0.02); }
+.detail-actions{ text-align:center; margin-top:12px; }
+.save-btn{ padding:10px 22px; border-radius:999px; background:#bfdbe6; border:none; font-weight:800; cursor:pointer; }
+
+@media (max-width:1100px){
+  .donor-layout{ grid-template-columns: 1fr; padding:16px; }
+  .donor-main{ flex-direction:column; }
+  .donor-card{ width:100%; }
+  .donation-detail{ width:100%; }
+}

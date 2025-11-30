@@ -2,37 +2,91 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Donador</title>
+  <title>Inicio Donador - Bocaditos</title>
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/donador.js" defer></script>
 </head>
 <body class="donador-panel">
-  <header>
-    <h2>DONADOR</h2>
-    <button onclick="logout()">Cerrar Sesión</button>
-  </header>
+  <div class="donor-layout">
+    <nav class="donor-nav">
+      <div class="brand">Bocaditos</div>
+      <ul>
+        <li class="active">Inicio</li>
+        <li>Donaciones</li>
+      </ul>
+      <div class="chat">CHAT</div>
+    </nav>
 
-  <section class="donor-info">
-    <p>Nombre: Walmart</p>
-    <p>Número: 954 255 6153</p>
-    <p>Ubicación: xxxxxxx</p>
-    <p>Estado: <select><option>Activo</option><option>Inactivo</option></select></p>
-  </section>
+    <main class="donor-main">
+      <section class="donor-card">
+        <div class="donor-header">DONADOR</div>
+        <div class="avatar-wrap">
+          <img src="assets/piña.png" alt="avatar" class="avatar">
+        </div>
+        <div class="status-buttons">
+          <span class="status active">Activo</span>
+          <span class="status inactive">Baja</span>
+        </div>
+        <button class="btn-logout" onclick="logout()">Cerrar Sesión</button>
 
-  <section class="donation-form">
-    <div style="text-align:center; margin-bottom:12px;">
-      <h3 class="signup-heading" style="margin:0 0 8px; color:#6b2b47; letter-spacing:4px;">Sign up for students</h3>
-      <a class="signup-large" href="signup-students.html">Sign up for students</a>
+        <h3>Información del donador</h3>
+        <div class="info-grid">
+          <div><strong>Nombre:</strong></div><div id="donor-name">-</div>
+          <div><strong>Número:</strong></div><div id="donor-phone">-</div>
+          <div><strong>Correo:</strong></div><div id="donor-email">-</div>
+          <div><strong>RFC:</strong></div><div id="donor-rfc">-</div>
+          <div><strong>Ubicación:</strong></div><div id="donor-location">-</div>
+        </div>
+      </section>
+
+      <section class="donation-detail">
+        <div class="detail-card">
+          <div class="detail-title">DETALLE DE DONACIÓN</div>
+          <form class="detail-form">
+            <label>Nombre de producto<input type="text" value="yogurt natural"></label>
+            <label>Tipo de producto<input type="text" value="Lácteo"></label>
+            <label>Fecha de caducidad<input type="text" placeholder="dd-mm-aaaa" value="22-oct-2026"></label>
+            <label>Cantidad<input type="number" value="25"></label>
+            <label>Destino<input type="text" value="UT riviera maya"></label>
+            <label>Fecha de salida<input type="text" placeholder="dd/mm/aaaa"></label>
+            <label>Fecha de llegada<input type="text" placeholder="dd/mm/aaaa"></label>
+            <div class="detail-actions"><button type="button" class="save-btn">Guardar</button></div>
+            </form>
+          </div>
+        </section>
+      </main>
     </div>
-    <h3>Realizar Donación</h3>
-    <input type="number" placeholder="Cantidad">
-    <input type="text" placeholder="Destino">
-    <input type="text" placeholder="Tipo de comida">
-    <input type="text" placeholder="Comida que dona">
-    <input type="text" placeholder="Fecha de vencimiento">
-    <input type="time" placeholder="Hora de salida">
-    <input type="time" placeholder="Hora de llegada">
-    <button>Enviar Donación</button>
-  </section>
+    <script>
+      // Cargar perfil de donador desde localStorage
+      document.addEventListener('DOMContentLoaded', function(){
+        try{
+          var raw = localStorage.getItem('bocaditos_donor_profile');
+          if (raw) {
+            var p = JSON.parse(raw);
+            document.getElementById('donor-name').textContent = p.razon || '-';
+            document.getElementById('donor-phone').textContent = p.telefono || '-';
+            document.getElementById('donor-email').textContent = p.correo || '-';
+            document.getElementById('donor-rfc').textContent = p.rfc || '-';
+            document.getElementById('donor-location').textContent = p.ubicacion || '-';
+          }
+        }catch(e){console.error(e)}
+
+        // Guardar detalle de donación en localStorage (simulado)
+        var saveBtn = document.querySelector('.save-btn');
+        if (saveBtn) {
+          saveBtn.addEventListener('click', function(){
+            var form = document.querySelector('.detail-form');
+            var data = {};
+            Array.from(form.elements).forEach(function(el){ if (el.tagName && el.tagName.toLowerCase()==='input'){
+                var label = el.closest('label');
+                var key = (label && label.firstChild && label.firstChild.textContent || el.name || el.placeholder).trim().toLowerCase().replace(/\s+/g,'_');
+                data[key] = el.value;
+              }
+            });
+            try{ var arr = JSON.parse(localStorage.getItem('bocaditos_donor_donations')||'[]'); arr.push({data:data,ts:Date.now()}); localStorage.setItem('bocaditos_donor_donations', JSON.stringify(arr)); alert('Donación guardada localmente'); }catch(e){console.error(e); alert('Error al guardar'); }
+          });
+        }
+      });
+    </script>
 </body>
 </html>

@@ -16,12 +16,13 @@
           
           <!-- Formulario tipo 'pills' para donors (vista solicitada) -->
           <div class="form-card" style="margin-top:18px;">
-            <form class="form-pills" action="login.html" method="get">
-              <input class="pill-input" name="razon" type="text" placeholder="Razon social" required>
-              <input class="pill-input" name="rfc" type="text" placeholder="RFC">
-              <input class="pill-input" name="telefono" type="tel" placeholder="Telefono">
-              <input class="pill-input" name="correo" type="email" placeholder="Correo" required>
-              <input class="pill-input" name="ubicacion" type="text" placeholder="Ubicacion">
+            <form id="signupDonorForm" class="form-pills" action="login.html" method="get">
+              <input type="hidden" name="role" value="donor">
+              <input class="pill-input" name="razon" id="razon" type="text" placeholder="Razon social" required>
+              <input class="pill-input" name="rfc" id="rfc" type="text" placeholder="RFC">
+              <input class="pill-input" name="telefono" id="telefono" type="tel" placeholder="Telefono">
+              <input class="pill-input" name="correo" id="correo" type="email" placeholder="Correo" required>
+              <input class="pill-input" name="ubicacion" id="ubicacion" type="text" placeholder="Ubicacion">
               <div class="submit-row"><button class="submit-btn" type="submit">Crear cuenta</button></div>
             </form>
           </div>
@@ -30,3 +31,6 @@
       <!-- Right column removed — page now shows only the donors table -->
     </div>
   </main>
+  <script src="js/signup-donors.js" defer></script>
+</body>
+</html>
