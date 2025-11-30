@@ -509,7 +509,7 @@ body {
 }
 
 .formulario .panel-title{ font-size:1.4rem;
-   color:#5a1216;
+   color:#ffffff; /* changed to white for visibility on dark panel */
     font-weight:800; 
     margin-bottom:8px; 
   }
@@ -758,6 +758,29 @@ textarea.input-like{ min-height:84px;
            opacity:0; transition:opacity .28s ease, transform .28s ease;
             z-index:9999; 
           }
+
+/* Discrete 'complete data' button */
+.complete-btn{
+  display:inline-block;
+  background:rgba(255,255,255,0.92);
+  color:#3b0709;
+  border:1px solid rgba(59,7,9,0.06);
+  padding:8px 14px;
+  border-radius:16px;
+  cursor:pointer;
+  font-weight:700;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.04);
+}
+.complete-btn:hover{ transform:translateY(-2px); }
+
+/* Modal for confirmation */
+.modal-overlay{ position:fixed; left:0; top:0; right:0; bottom:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; z-index:2000; }
+.modal{ background:#fff; padding:18px; border-radius:10px; width:320px; max-width:90%; box-shadow:0 20px 40px rgba(0,0,0,0.28); }
+.modal-body{ color:#3b0709; font-weight:700; margin-bottom:12px; }
+.modal-actions{ display:flex; gap:10px; justify-content:flex-end; }
+.modal-btn{ padding:8px 12px; border-radius:8px; border:none; cursor:pointer; font-weight:700; }
+.modal-cancel{ background:#fff3f3; color:#7a1d20; }
+.modal-confirm{ background:#2e8b57; color:#fff; }
 .bt-toast.visible{
    opacity:1; 
    transform:translateX(-50%) translateY(0); 

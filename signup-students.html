@@ -51,7 +51,9 @@
             matricula: values.matricula || null,
             cuatrimestre: values.cuatrimestre || null,
             email: values.correo,
-            password: values.contrasena
+            password: values.contrasena,
+            // indicate this signup is for a beneficiary so backend saves id_rol accordingly
+            roleName: 'beneficiario'
           };
 
           try {
