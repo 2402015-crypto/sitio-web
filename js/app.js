@@ -47,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
 						if (roleEl) roleEl.textContent = (user.roleName || user.role || (user.id_rol ? 'Beneficiario' : ''));
 						if (matriculaEl) matriculaEl.textContent = (user.matricula || user.matricula || '');
 						if (cuatriEl) cuatriEl.textContent = (user.cuatrimestre || user.cuatrimestre || '');
-						// leave carrera and grupo blank as requested
-						if (carreraEl) carreraEl.textContent = '';
-						if (grupoEl) grupoEl.textContent = '';
+						// show carrera and grupo from user profile when present
+						if (carreraEl) carreraEl.textContent = (user.carrera || '');
+						if (grupoEl) grupoEl.textContent = (user.grupo || '');
 					} catch (e) { /* ignore */ }
 				}).catch(function(){
 					// fallback to localStorage user if available
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
 							if (roleEl2) roleEl2.textContent = (u.roleName || u.role || 'Beneficiario');
 							if (matriculaEl2) matriculaEl2.textContent = (u.matricula || '');
 							if (cuatriEl2) cuatriEl2.textContent = (u.cuatrimestre || '');
-							if (carreraEl2) carreraEl2.textContent = '';
-							if (grupoEl2) grupoEl2.textContent = '';
+							if (carreraEl2) carreraEl2.textContent = (u.carrera || '');
+							if (grupoEl2) grupoEl2.textContent = (u.grupo || '');
 						}
 					} catch (e){/* ignore */}
 				});
