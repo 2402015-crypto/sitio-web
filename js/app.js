@@ -157,6 +157,119 @@ document.addEventListener('DOMContentLoaded', function () {
 				showToast('Error al guardar.');
 			}
 		});
+
+		// Eliminar alergias: abrir modal con lista y permitir seleccionar para eliminar
+		(function setupDeleteAllergies(){
+			var delBtn = document.getElementById('delete-allergies-btn');
+			var modal = document.getElementById('delete-allergies-modal');
+			var listEl = document.getElementById('delete-allergies-list');
+			var cancel = document.getElementById('delete-allergies-cancel');
+			var confirm = document.getElementById('delete-allergies-confirm');
+			if (!delBtn || !modal || !listEl || !cancel || !confirm) return;
+
+			function renderList(items){
+				listEl.innerHTML = '';
+				if (!items || !items.length) { listEl.innerHTML = '<p class="muted">No hay alergias registradas.</p>'; return; }
+				items.forEach(function(it){
+					var id = it.id || it.value || it.ts || it;
+					var desc = it.descripcion || it.value || it.text || it;
+					var row = document.createElement('div');
+					row.style.display = 'flex'; row.style.alignItems = 'center'; row.style.gap = '8px'; row.style.padding = '6px 4px';
+					var cb = document.createElement('input'); cb.type = 'checkbox'; cb.dataset.alid = it.id || '';
+					var span = document.createElement('span'); span.textContent = desc;
+					row.appendChild(cb); row.appendChild(span);
+					listEl.appendChild(row);
+				});
+			}
+
+			delBtn.addEventListener('click', function(ev){
+				ev && ev.preventDefault();
+				var token = localStorage.getItem('bocaditos_token');
+				if (token) {
+					fetch('http://localhost:3000/me/allergies', { headers: { 'Authorization': 'Bearer ' + token } })
+					.then(function(res){ if (!res.ok) throw new Error('fetch failed'); return res.json(); })
+					.then(function(json){ renderList(json.allergies || []); modal.style.display = 'flex'; })
+					.catch(function(err){ console.warn('Could not load allergies from server', err); showToast('No se pudieron cargar las alergias'); });
+					return;
+				}
+				// no token: show localStorage
+				try {
+					var stored = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]');
+					if (!stored || !stored.length) showToast('No tienes alergias guardadas localmente');
+					renderList(stored);
+					modal.style.display = 'flex';
+				} catch(e){ console.error(e); showToast('Error leyendo alergias locales'); }
+			});
+
+			cancel.addEventListener('click', function(ev){ ev && ev.preventDefault(); modal.style.display = 'none'; });
+
+			confirm.addEventListener('click', function(ev){
+				ev && ev.preventDefault();
+				var checkboxes = listEl.querySelectorAll('input[type="checkbox"]');
+				var toDelete = [];
+				checkboxes.forEach(function(cb){ if (cb.checked) { var id = cb.dataset.alid; if (id) toDelete.push(Number(id)); else {
+					// localStorage item without id -> use text
+					var txt = cb.nextSibling && cb.nextSibling.textContent; if (txt) toDelete.push(txt);
+				}} });
+				if (!toDelete.length) { showToast('Selecciona al menos una alergia'); return; }
+
+				var token = localStorage.getItem('bocaditos_token');
+				if (token) {
+					fetch('http://localhost:3000/me/allergies', {
+						method: 'DELETE',
+						headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+						body: JSON.stringify({ ids: toDelete })
+					}).then(function(res){ if (!res.ok) return res.json().then(function(j){ throw j; }); return res.json(); })
+					.then(function(json){ showToast('Alergias eliminadas'); renderList(json.allergies || []); modal.style.display = 'none'; })
+					.catch(function(err){ console.error('delete allergies error', err); showToast('No se pudieron eliminar las alergias'); });
+					return;
+				}
+
+				// local delete: remove from localStorage by text
+				try {
+					var stored = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]');
+					var kept = stored.filter(function(s){ var text = (s && (s.value || s.text)) || s; return toDelete.indexOf(text) === -1; });
+					localStorage.setItem('bocaditos_alergias', JSON.stringify(kept));
+					showToast('Alergias eliminadas localmente');
+					renderList(kept);
+					modal.style.display = 'none';
+				} catch (e){ console.error(e); showToast('Error al eliminar localmente'); }
+			});
+		})();
+
+		// Mostrar lista de alergias del usuario en el panel
+		(function renderUserAllergies(){
+			var container = document.getElementById('allergies-list');
+			if (!container) return;
+
+			function show(items){
+				if (!items || !items.length) { container.innerHTML = '<p class="muted">No tienes alergias registradas.</p>'; return; }
+				container.innerHTML = '';
+				items.forEach(function(it){
+					var el = document.createElement('span');
+					el.textContent = it.descripcion || it.value || it.text || it;
+					el.style.display = 'inline-block';
+					el.style.padding = '4px 8px';
+					el.style.margin = '2px';
+					el.style.background = '#fff7f7';
+					el.style.border = '1px solid #f2dede';
+					el.style.borderRadius = '12px';
+					container.appendChild(el);
+				});
+			}
+
+			var token = localStorage.getItem('bocaditos_token');
+			if (token) {
+				fetch('http://localhost:3000/me/allergies', { headers: { 'Authorization': 'Bearer ' + token } })
+				.then(function(res){ if (!res.ok) throw new Error('fetch failed'); return res.json(); })
+				.then(function(json){ show(json.allergies || []); })
+				.catch(function(err){ console.warn('Could not load allergies from server', err); // fallback to local
+					try { var stored = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]'); if (stored && stored.length) show(stored); else container.innerHTML='<p class="muted">No tienes alergias registradas.</p>'; } catch(e){ container.innerHTML='<p class="muted">No tienes alergias registradas.</p>'; }
+				});
+			} else {
+				try { var stored2 = JSON.parse(localStorage.getItem('bocaditos_alergias') || '[]'); if (stored2 && stored2.length) show(stored2); else container.innerHTML='<p class="muted">No tienes alergias registradas.</p>'; } catch(e){ container.innerHTML='<p class="muted">No tienes alergias registradas.</p>'; }
+			}
+		})();
 	});
 
 	// Enviar comentarios (simulado: guarda localmente y limpia textarea)

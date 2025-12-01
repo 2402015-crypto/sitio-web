@@ -83,8 +83,12 @@
                     <h3>¿Alergia alimentaria?</h3>
                     <p class="muted">Indique si es alérgico a algún tipo de comida.</p>
                     <input type="text" class="input-like" placeholder="Ej: Nueces, mariscos, fresas...">
+                    <div id="allergies-list" style="margin-top:8px; font-size:14px;"></div>
                   </div>
-                  <button class="guardar">Guardar</button>
+                  <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
+                    <button class="guardar">Guardar</button>
+                    <button id="delete-allergies-btn" class="btn" style="background:#fff3f3;color:#000;padding:6px 10px;border-radius:6px;border:1px solid #e9cfcf;">Eliminar alergias</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -105,6 +109,20 @@
 
           </div>
         </main>
+      </div>
+    </div>
+  </div>
+  <!-- Modal: delete allergies -->
+  <div id="delete-allergies-modal" class="modal-overlay" style="display:none;">
+    <div class="modal" style="max-width:520px;">
+      <div class="modal-body">
+        <h3>Eliminar alergias</h3>
+        <p>Seleccione las alergias que desea eliminar:</p>
+        <div id="delete-allergies-list" style="max-height:240px;overflow:auto;margin-top:8px;padding:6px 4px;"></div>
+      </div>
+      <div class="modal-actions">
+        <button id="delete-allergies-cancel" class="modal-btn modal-cancel">Cancelar</button>
+        <button id="delete-allergies-confirm" class="modal-btn modal-confirm">Eliminar seleccionadas</button>
       </div>
     </div>
   </div>
